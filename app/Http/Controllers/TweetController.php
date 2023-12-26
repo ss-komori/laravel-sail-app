@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Tweet;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\TweetRequest;
 use App\Http\Controllers\Controller;
 
 class TweetController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @return Collection
      */
     public function index()
     {
@@ -24,50 +25,41 @@ class TweetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @param TweetRequest $request
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function create()
+    public function store(TweetRequest $request)
     {
-        //
+        $tweet = Tweet::create($request->all());
+        return $tweet
+            ? response()->json($tweet, 201)
+            : response()->json([], 500);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param TweetRequest $request
+     * @param Tweet $tweet
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function update(TweetRequest $request, Tweet $tweet)
     {
-        //
+        $tweet->title = $request->title ?? $tweet->title;
+        $tweet->content = $request->content ?? $tweet->content;
+
+        return $tweet->update()
+            ? response()->json($tweet)
+            : response()->json([], 500);
     }
 
     /**
-     * Display the specified resource.
+     * @param Tweet $tweet
+     * @return JsonResponse
      */
-    public function show(string $id)
+    public function destroy(Tweet $tweet)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return $tweet->delete()
+            ? response()->json($tweet)
+            : response()->json([], 500);
     }
 }
