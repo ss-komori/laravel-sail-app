@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tweets', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->string('user_id')->nullable();
+            $table->integer('status')->default(0);
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

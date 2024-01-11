@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('tweets', 'App\\Http\\Controllers\\TweetController');
+Route::apiResource('tasks', 'App\\Http\\Controllers\\TaskController');

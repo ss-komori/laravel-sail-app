@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tweet extends Model
+class Task extends Model
 {
     use HasFactory;
     use SerializeDate;
 
     protected $fillable = [
-        'title', 'content', 'user_id', 'created_at', 'updated_at'
+        'title', 'content', 'status', 'created_at', 'updated_at'
     ];
 
     protected $casts = [
